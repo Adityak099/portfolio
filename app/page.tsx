@@ -72,7 +72,7 @@ const projects = [
     title: "Predicting Cardiovascular Disease",
     description:
       "An advanced machine learning model that predicts the likelihood of cardiovascular disease using state-of-the-art learning algorithms and comprehensive health datasets. The system provides accurate predictions to assist in early diagnosis and preventive healthcare.",
-    image: "/cardio_result.png",
+    image: "/Cardio_Result.png",
     technologies: ["Python", "Scikit-learn", "TensorFlow", "Pandas", "NumPy"],
     github: "#",
     live: "#",
