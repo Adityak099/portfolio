@@ -51,7 +51,7 @@ const projects = [
   {
     title: "Medilenz Management Dashboard",
     description:
-      "A full-stack e-commerce solution with real-time inventory management, payment processing, and admin dashboard.",
+      "Medilenz is a specialized medical-legal services company that provides AI-powered medical record review services to US-based attorneys, insurance companies, and medical professionals.",
     image: "/medilenz.png",
     technologies: ["Next.js", "TypeScript", "Stripe", "PostgreSQL"],
     github: "#",
@@ -61,7 +61,7 @@ const projects = [
   {
     title: "SourcifyHub Management Dashboard",
     description:
-      "A full-stack e-commerce solution with real-time inventory management, payment processing, and admin dashboard.",
+      "Sourcify Hub is an online B2B platform that connects buyers with manufacturing suppliers across multiple industries, specializing in providing instant quotes for various manufacturing services.",
     image: "/sorcifyhub.png",
     technologies: ["Next.js", "TypeScript", "Stripe", "PostgreSQL"],
     github: "#",
@@ -157,7 +157,7 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <motion.div className="text-2xl font-bold text-white" whileHover={{ scale: 1.05 }}>
-              Portfolio
+              Kumar's Portfolio
             </motion.div>
             <div className="hidden md:flex space-x-8">
               {["About", "Skills", "Projects", "Contact"].map((item) => (
