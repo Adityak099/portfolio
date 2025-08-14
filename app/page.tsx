@@ -28,6 +28,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
+import { Toaster } from "@/components/ui/toaster"
 
 const skills = [
   { name: "Frontend Development", icon: Code, description: "React, Next.js, TypeScript, Tailwind CSS" },
@@ -106,6 +107,7 @@ const projects = [
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("hero")
   const [formData, setFormData] = useState({ name: "", email: "", message: "" })
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
   const { scrollYProgress } = useScroll()
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
@@ -133,13 +135,45 @@ export default function Portfolio() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    })
-    setFormData({ name: "", email: "", message: "" })
+    setIsSubmitting(true)
+
+    try {
+      // Using EmailJS to send emails
+      const emailjs = await import('@emailjs/browser')
+
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,    // From .env.local
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,   // From .env.local
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_email: 'kraditya.1222@gmail.com'
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!     // From .env.local
+      )
+
+      // Enhanced success message
+      toast({
+        title: "Thank you! 🎉",
+        description: "Your message has been sent successfully. I will get back to you soon!",
+        duration: 5000, // Show for 5 seconds
+      })
+
+      // Clear form after successful submission
+      setFormData({ name: "", email: "", message: "" })
+
+    } catch (error) {
+      console.error('Error sending email:', error)
+      toast({
+        title: "Oops! Something went wrong 😔",
+        description: "Failed to send your message. Please try again or contact me directly via email.",
+        variant: "destructive",
+        duration: 5000,
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const scrollToSection = (sectionId: string) => {
@@ -573,7 +607,8 @@ export default function Portfolio() {
                     placeholder="Your Name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
+                    disabled={isSubmitting}
+                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50 disabled:opacity-50"
                     required
                   />
                 </div>
@@ -583,7 +618,8 @@ export default function Portfolio() {
                     placeholder="Your Email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
+                    disabled={isSubmitting}
+                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50 disabled:opacity-50"
                     required
                   />
                 </div>
@@ -592,12 +628,27 @@ export default function Portfolio() {
                     placeholder="Your Message"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50 min-h-[120px]"
+                    disabled={isSubmitting}
+                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50 min-h-[120px] disabled:opacity-50"
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3">
-                  Send Message
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-white py-3 transition-all duration-300"
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <span>Sending...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center space-x-2">
+                      <Mail className="w-4 h-4" />
+                      <span>Send Message</span>
+                    </div>
+                  )}
                 </Button>
               </form>
             </div>
@@ -610,7 +661,7 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center space-y-8">
             {/* Logo/Name */}
-            <motion.div 
+            <motion.div
               className="text-2xl font-bold text-white"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -619,9 +670,9 @@ export default function Portfolio() {
             >
               Aditya's Portfolio
             </motion.div>
-            
+
             {/* Social Links */}
-            <motion.div 
+            <motion.div
               className="flex space-x-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -643,11 +694,11 @@ export default function Portfolio() {
                   className="p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-purple-400/50 transition-all duration-300"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: 400, 
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
                     damping: 25,
-                    delay: 0.4 + index * 0.1 
+                    delay: 0.4 + index * 0.1
                   }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -656,9 +707,9 @@ export default function Portfolio() {
                 </motion.a>
               ))}
             </motion.div>
-            
+
             {/* Navigation Links */}
-            <motion.div 
+            <motion.div
               className="flex flex-wrap justify-center gap-8 text-sm"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -675,12 +726,12 @@ export default function Portfolio() {
                 </button>
               ))}
             </motion.div>
-            
+
             {/* Divider */}
             <div className="w-full max-w-2xl h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-            
+
             {/* Copyright */}
-            <motion.div 
+            <motion.div
               className="text-center"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -697,6 +748,7 @@ export default function Portfolio() {
           </div>
         </div>
       </footer>
+      <Toaster />
     </div>
   )
 }
