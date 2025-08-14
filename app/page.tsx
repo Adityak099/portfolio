@@ -433,7 +433,7 @@ export default function Portfolio() {
                     variant="outline"
                     size="sm"
                     className="border-white/30 text-white hover:bg-white/10 bg-transparent"
-                    onClick={() => window.open('/resume.pdf', '_blank')}
+                    onClick={() => window.open('/Resume_14_8.pdf', '_blank')}
                   >
                     <Download className="w-4 h-4 mr-2" />
                     Resume
