@@ -19,7 +19,8 @@ import {
   Star,
   Sparkles,
   Twitter,
-
+  Instagram,
+  Download,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -157,7 +158,7 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <motion.div className="text-2xl font-bold text-white" whileHover={{ scale: 1.05 }}>
-              Kumar's Portfolio
+              Aditya's Portfolio
             </motion.div>
             <div className="hidden md:flex space-x-8">
               {["About", "Skills", "Projects", "Contact"].map((item) => (
@@ -330,7 +331,7 @@ export default function Portfolio() {
           >
             {[
               { icon: Github, href: "https://github.com/Adityak099", label: "GitHub" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/kumar-aditya-109506237/", label: "LinkedIn" },
+              { icon: Linkedin, href: "https://www.linkedin.com/in/Aditya-aditya-109506237/", label: "LinkedIn" },
               { icon: Mail, href: "mailto:kraditya.1222@gmail.com", label: "Email" },
               { icon: Twitter, href: "https://x.com/kr_adi01", label: "X" },
             ].map((social, index) => (
@@ -365,12 +366,12 @@ export default function Portfolio() {
             <h2 className="text-4xl font-bold text-white mb-8 text-center">About Me</h2>
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <p className="text-lg text-white/80 mb-6 leading-relaxed">
-                  I'm Kumar Aditya, a final-year B.Tech Computer Science student and passionate Full-Stack Developer
+                <p className="text-lg text-white/80 mb-6 leading-relaxed text-justify">
+                  I'm Aditya Aditya, a final-year B.Tech Computer Science student and passionate Full-Stack Developer
                   specializing in C, C++, Python, and modern web technologies like Next.js, React.js, Node.js,
                   Express.js, MongoDB, and PostgreSQL.
                 </p>
-                <p className="text-lg text-white/80 mb-6 leading-relaxed">
+                <p className="text-lg text-white/80 mb-6 leading-relaxed text-justify">
                   I've built diverse projects including IPO Platforms, E-commerce solutions, Store Rating systems,
                   and ML-powered healthcare applications. I focus on creating scalable, user-friendly applications
                   with clean design and seamless functionality.
@@ -389,10 +390,19 @@ export default function Portfolio() {
                     variant="outline"
                     size="sm"
                     className="border-white/30 text-white hover:bg-white/10 bg-transparent"
-                    onClick={() => window.location.href = 'https://www.linkedin.com/in/kumar-aditya-109506237/'}
+                    onClick={() => window.location.href = 'https://www.linkedin.com/in/Aditya-aditya-109506237/'}
                   >
                     <Linkedin className="w-4 h-4 mr-2" />
                     LinkedIn
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                    onClick={() => window.open('/resume.pdf', '_blank')}
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Resume
                   </Button>
                 </div>
               </div>
@@ -400,7 +410,7 @@ export default function Portfolio() {
                 <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
                   <img
                     src="/image.jpg"
-                    alt="Kumar Aditya"
+                    alt="Aditya Aditya"
                     className="rounded-2xl shadow-2xl w-full h-96 object-cover"
                   />
                 </motion.div>
@@ -487,7 +497,7 @@ export default function Portfolio() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="text-white/70 p-2 hover:text-white"
+                            className="text-white/70 p-2 hover:text-green-500"
                             onClick={() => window.open(project.github, '_blank')}
                           >
                             <Github className="w-4 h-4" />
@@ -495,7 +505,7 @@ export default function Portfolio() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="text-white/70 p-2 hover:text-white"
+                            className="text-white/70 p-2 hover:text-green-500"
                             onClick={() => window.open(project.live, '_blank')}
                           >
                             <ExternalLink className="w-4 h-4" />
@@ -553,7 +563,7 @@ export default function Portfolio() {
                   </div>
                   <div className="flex items-center space-x-3">
                     <Linkedin className="w-5 h-5 text-purple-400" />
-                    <span className="text-white/80">linkedin.com/in/kumar-aditya-109506237</span>
+                    <span className="text-white/80">linkedin.com/in/Aditya-aditya-109506237</span>
                   </div>
                 </div>
               </div>
@@ -596,9 +606,95 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 sm:px-6 lg:px-8 border-t border-white/10">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-white/60">© 2024 Kumar Aditya. Built with Next.js and Tailwind CSS.</p>
+      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/10 bg-black/10">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col items-center space-y-8">
+            {/* Logo/Name */}
+            <motion.div 
+              className="text-2xl font-bold text-white"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              Aditya's Portfolio
+            </motion.div>
+            
+            {/* Social Links */}
+            <motion.div 
+              className="flex space-x-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              {[
+                { icon: Github, href: "https://github.com/Adityak099", label: "GitHub" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/Aditya-aditya-109506237/", label: "LinkedIn" },
+                { icon: Twitter, href: "https://x.com/kr_adi01", label: "Twitter" },
+                { icon: Mail, href: "mailto:kraditya.1222@gmail.com", label: "Email" },
+                { icon: Instagram, href: "https://instagram.com/guru_aditya09", label: "Instagram" },
+              ].map((social, index) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-purple-400/50 transition-all duration-300"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 400, 
+                    damping: 25,
+                    delay: 0.4 + index * 0.1 
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  <social.icon className="w-5 h-5" />
+                </motion.a>
+              ))}
+            </motion.div>
+            
+            {/* Navigation Links */}
+            <motion.div 
+              className="flex flex-wrap justify-center gap-8 text-sm"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              {["About", "Skills", "Projects", "Contact"].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollToSection(item.toLowerCase())}
+                  className="text-white/60 hover:text-purple-400 transition-colors duration-300"
+                >
+                  {item}
+                </button>
+              ))}
+            </motion.div>
+            
+            {/* Divider */}
+            <div className="w-full max-w-2xl h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+            
+            {/* Copyright */}
+            <motion.div 
+              className="text-center"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.2, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <p className="text-white/60 text-sm">
+                © 2024 Aditya Aditya. Built with ❣️ using Next.js and Tailwind CSS.
+              </p>
+              <p className="text-white/40 text-xs mt-2">
+                Crafting digital experiences with passion and precision.
+              </p>
+            </motion.div>
+          </div>
         </div>
       </footer>
     </div>
