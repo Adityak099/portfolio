@@ -175,20 +175,32 @@ export default function Portfolio() {
     setIsSubmitting(true);
 
     try {
+      // Basic validation
+      if (!formData.name || !formData.email || !formData.message) {
+        throw new Error("Please fill in all fields");
+      }
+
       // Using EmailJS to send emails
       const emailjs = await import("@emailjs/browser");
 
-      await emailjs.send(
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_email: "kraditya.1222@gmail.com",
+        reply_to: formData.email,
+      };
+
+      console.log("Attempting to send email with EmailJS...");
+
+      const result = await emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, // From .env.local
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, // From .env.local
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-          to_email: "kraditya.1222@gmail.com",
-        },
+        templateParams,
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY! // From .env.local
       );
+
+      console.log("EmailJS Success:", result);
 
       // Enhanced success message
       toast({
@@ -202,13 +214,52 @@ export default function Portfolio() {
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
       console.error("Error sending email:", error);
+
+      // Provide helpful error messages and fallback
+      let errorMessage = "Failed to send your message. ";
+      let fallbackAction = "";
+
+      if (error instanceof Error) {
+        if (error.message.includes("fill in all fields")) {
+          errorMessage = "Please fill in all required fields.";
+        } else if (
+          error.message.includes("network") ||
+          error.message.includes("fetch")
+        ) {
+          errorMessage =
+            "Network error. Please check your internet connection.";
+        } else {
+          errorMessage = `Error: ${error.message}. `;
+        }
+      }
+
+      // Add fallback contact information
+      fallbackAction = `You can also reach me directly at kraditya.1222@gmail.com`;
+
       toast({
         title: "Oops! Something went wrong 😔",
-        description:
-          "Failed to send your message. Please try again or contact me directly via email.",
+        description: errorMessage + fallbackAction,
         variant: "destructive",
-        duration: 5000,
+        duration: 8000, // Show longer for error messages
       });
+
+      // Create a mailto fallback link
+      const subject = encodeURIComponent("Portfolio Contact");
+      const body = encodeURIComponent(
+        `Hi Kumar Aditya,\n\nName: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      );
+      const mailtoLink = `mailto:kraditya.1222@gmail?subject=${subject}&body=${body}`;
+
+      // Open email client as fallback after a short delay
+      setTimeout(() => {
+        if (
+          confirm(
+            "Would you like to open your email client to send the message directly?"
+          )
+        ) {
+          window.location.href = mailtoLink;
+        }
+      }, 2000);
     } finally {
       setIsSubmitting(false);
     }
@@ -767,6 +818,32 @@ export default function Portfolio() {
                     </div>
                   )}
                 </Button>
+
+                {/* Backup Email Option */}
+                <div className="text-center pt-4 border-t border-white/10">
+                  <p className="text-white/60 text-sm mb-3">
+                    Having trouble with the form?
+                  </p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                    onClick={() => {
+                      const subject = encodeURIComponent("Portfolio Contact");
+                      const body = encodeURIComponent(
+                        `Hi Kumar Aditya,\n\nName: ${
+                          formData.name || "[Your Name]"
+                        }\nEmail: ${
+                          formData.email || "[Your Email]"
+                        }\n\nMessage:\n${formData.message || "[Your Message]"}`
+                      );
+                      window.location.href = `mailto:kraditya.1222@gmail.com?subject=${subject}&body=${body}`;
+                    }}
+                  >
+                    <Mail className="w-4 h-4 mr-2" />
+                    Email Me Directly
+                  </Button>
+                </div>
               </form>
             </div>
           </motion.div>
