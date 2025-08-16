@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import type React from "react"
+import React from "react";
 
-import { useState, useEffect } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowDown,
   Github,
@@ -21,24 +21,54 @@ import {
   Twitter,
   Instagram,
   Download,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/hooks/use-toast"
-import { Toaster } from "@/components/ui/toaster"
-import { FixedVisitorCounter } from "@/components/fixed-visitor-counter"
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
+import { FixedVisitorCounter } from "@/components/fixed-visitor-counter";
 
 const skills = [
-  { name: "Frontend Development", icon: Code, description: "React, Next.js, TypeScript, Tailwind CSS" },
-  { name: "UI/UX Design", icon: Palette, description: "Figma, Adobe Creative Suite, Design Systems" },
-  { name: "Mobile Development", icon: Smartphone, description: "React Native, Flutter, Progressive Web Apps" },
-  { name: "Backend Development", icon: Server, description: "Node.js, Python, API Development" },
-  { name: "Database Management", icon: Database, description: "PostgreSQL, MongoDB, Redis" },
-  { name: "DevOps & Deployment", icon: Globe, description: "AWS, Docker, CI/CD, Vercel" },
-]
+  {
+    name: "Frontend Development",
+    icon: Code,
+    description: "React, Next.js, TypeScript, Tailwind CSS",
+  },
+  {
+    name: "UI/UX Design",
+    icon: Palette,
+    description: "Figma, Adobe Creative Suite, Design Systems",
+  },
+  {
+    name: "Mobile Development",
+    icon: Smartphone,
+    description: "React Native, Flutter, Progressive Web Apps",
+  },
+  {
+    name: "Backend Development",
+    icon: Server,
+    description: "Node.js, Python, API Development",
+  },
+  {
+    name: "Database Management",
+    icon: Database,
+    description: "PostgreSQL, MongoDB, Redis",
+  },
+  {
+    name: "DevOps & Deployment",
+    icon: Globe,
+    description: "AWS, Docker, CI/CD, Vercel",
+  },
+];
 
 const projects = [
   {
@@ -102,84 +132,91 @@ const projects = [
     live: "#",
     featured: true,
   },
-
-]
+];
 
 export default function Portfolio() {
-  const [activeSection, setActiveSection] = useState("hero")
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const { toast } = useToast()
-  const { scrollYProgress } = useScroll()
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
+  const [activeSection, setActiveSection] = useState("hero");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  const { scrollYProgress } = useScroll();
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["hero", "about", "skills", "projects", "contact"]
-      const scrollPosition = window.scrollY + 100
+      const sections = ["hero", "about", "skills", "projects", "contact"];
+      const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
-        const element = document.getElementById(section)
+        const element = document.getElementById(section);
         if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
+          const { offsetTop, offsetHeight } = element;
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
+            setActiveSection(section);
+            break;
           }
         }
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
     try {
       // Using EmailJS to send emails
-      const emailjs = await import('@emailjs/browser')
+      const emailjs = await import("@emailjs/browser");
 
       await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,    // From .env.local
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,   // From .env.local
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, // From .env.local
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, // From .env.local
         {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
-          to_email: 'kraditya.1222@gmail.com'
+          to_email: "kraditya.1222@gmail.com",
         },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!     // From .env.local
-      )
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY! // From .env.local
+      );
 
       // Enhanced success message
       toast({
         title: "Thank you! 🎉",
-        description: "Your message has been sent successfully. I will get back to you soon!",
+        description:
+          "Your message has been sent successfully. I will get back to you soon!",
         duration: 5000, // Show for 5 seconds
-      })
+      });
 
       // Clear form after successful submission
-      setFormData({ name: "", email: "", message: "" })
-
+      setFormData({ name: "", email: "", message: "" });
     } catch (error) {
-      console.error('Error sending email:', error)
+      console.error("Error sending email:", error);
       toast({
         title: "Oops! Something went wrong 😔",
-        description: "Failed to send your message. Please try again or contact me directly via email.",
+        description:
+          "Failed to send your message. Please try again or contact me directly via email.",
         variant: "destructive",
         duration: 5000,
-      })
+      });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
-  }
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -192,7 +229,10 @@ export default function Portfolio() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
-            <motion.div className="text-2xl font-bold text-white" whileHover={{ scale: 1.05 }}>
+            <motion.div
+              className="text-2xl font-bold text-white"
+              whileHover={{ scale: 1.05 }}
+            >
               Aditya's Portfolio
             </motion.div>
             <div className="hidden md:flex space-x-8">
@@ -200,8 +240,11 @@ export default function Portfolio() {
                 <button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className={`text-sm font-medium transition-colors hover:text-purple-400 ${activeSection === item.toLowerCase() ? "text-purple-400" : "text-white/70"
-                    }`}
+                  className={`text-sm font-medium transition-colors hover:text-purple-400 ${
+                    activeSection === item.toLowerCase()
+                      ? "text-purple-400"
+                      : "text-white/70"
+                  }`}
                 >
                   {item}
                 </button>
@@ -212,7 +255,10 @@ export default function Portfolio() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section
+        id="hero"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      >
         <motion.div className="absolute inset-0 z-0" style={{ y: backgroundY }}>
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20" />
 
@@ -310,7 +356,8 @@ export default function Portfolio() {
             transition={{ duration: 0.8, delay: 0.5 }}
           >
             <p className="text-xl md:text-2xl text-white/80 mb-4 max-w-3xl mx-auto">
-              Full-Stack Developer & UI/UX Designer crafting digital experiences that matter
+              Full-Stack Developer & UI/UX Designer crafting digital experiences
+              that matter
             </p>
             <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm text-white/60">
               <div className="flex items-center gap-2">
@@ -334,7 +381,10 @@ export default function Portfolio() {
             transition={{ duration: 0.8, delay: 0.7 }}
           >
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   size="lg"
                   className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 shadow-lg shadow-purple-500/25"
@@ -344,7 +394,10 @@ export default function Portfolio() {
                   View My Work
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   size="lg"
                   variant="outline"
@@ -365,9 +418,21 @@ export default function Portfolio() {
             className="mt-12 flex justify-center space-x-6"
           >
             {[
-              { icon: Github, href: "https://github.com/Adityak099", label: "GitHub" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/Aditya-aditya-109506237/", label: "LinkedIn" },
-              { icon: Mail, href: "mailto:kraditya.1222@gmail.com", label: "Email" },
+              {
+                icon: Github,
+                href: "https://github.com/Adityak099",
+                label: "GitHub",
+              },
+              {
+                icon: Linkedin,
+                href: "https://www.linkedin.com/in/kumar-aditya-109506237/",
+                label: "LinkedIn",
+              },
+              {
+                icon: Mail,
+                href: "mailto:kraditya.1222@gmail.com",
+                label: "Email",
+              },
               { icon: Twitter, href: "https://x.com/kr_adi01", label: "X" },
             ].map((social, index) => (
               <motion.a
@@ -385,8 +450,6 @@ export default function Portfolio() {
             ))}
           </motion.div>
         </div>
-
-
       </section>
 
       {/* About Section */}
@@ -398,25 +461,39 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold text-white mb-8 text-center">About Me</h2>
+            <h2 className="text-4xl font-bold text-white mb-8 text-center">
+              About Me
+            </h2>
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <p className="text-lg text-white/80 mb-6 leading-relaxed text-justify">
-                  I'm Aditya Aditya, a final-year B.Tech Computer Science student and passionate Full-Stack Developer
-                  specializing in C, C++, Python, and modern web technologies like Next.js, React.js, Node.js,
-                  Express.js, MongoDB, and PostgreSQL.
+                  I'm{" "}
+                  <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-semibold">
+                    Kumar Aditya
+                  </span>
+                  , a final-year B.Tech Computer Science student and passionate{" "}
+                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent font-semibold">
+                    Full-Stack Developer
+                  </span>{" "}
+                  specializing in C, C++, Python, and modern web technologies
+                  like Next.js, React.js, Node.js, Express.js, MongoDB, and
+                  PostgreSQL.
                 </p>
                 <p className="text-lg text-white/80 mb-6 leading-relaxed text-justify">
-                  I've built diverse projects including IPO Platforms, E-commerce solutions, Store Rating systems,
-                  and ML-powered healthcare applications. I focus on creating scalable, user-friendly applications
-                  with clean design and seamless functionality.
+                  I've built diverse projects including IPO Platforms,
+                  E-commerce solutions, Store Rating systems, and ML-powered
+                  healthcare applications. I focus on creating scalable,
+                  user-friendly applications with clean design and seamless
+                  functionality.
                 </p>
                 <div className="flex space-x-4">
                   <Button
                     variant="outline"
                     size="sm"
                     className="border-white/30 text-white hover:bg-white/10 bg-transparent"
-                    onClick={() => window.location.href = 'https://github.com/Adityak099'}
+                    onClick={() =>
+                      (window.location.href = "https://github.com/Adityak099")
+                    }
                   >
                     <Github className="w-4 h-4 mr-2" />
                     GitHub
@@ -425,7 +502,10 @@ export default function Portfolio() {
                     variant="outline"
                     size="sm"
                     className="border-white/30 text-white hover:bg-white/10 bg-transparent"
-                    onClick={() => window.location.href = 'https://www.linkedin.com/in/Aditya-aditya-109506237/'}
+                    onClick={() =>
+                      (window.location.href =
+                        "https://www.linkedin.com/in/kumar-aditya-109506237/")
+                    }
                   >
                     <Linkedin className="w-4 h-4 mr-2" />
                     LinkedIn
@@ -435,8 +515,9 @@ export default function Portfolio() {
                     size="sm"
                     className="border-white/30 text-white hover:bg-white/10 bg-transparent"
                     onClick={() => {
-                      const resumeLink = 'https://drive.google.com/file/d/1z26pf0zGQliEkOZtJEDiAAmxeJvf7KbY/view?usp=sharing'
-                      window.open(resumeLink, '_blank')
+                      const resumeLink =
+                        "https://drive.google.com/file/d/1z26pf0zGQliEkOZtJEDiAAmxeJvf7KbY/view?usp=sharing";
+                      window.open(resumeLink, "_blank");
                     }}
                   >
                     <Download className="w-4 h-4 mr-2" />
@@ -445,7 +526,10 @@ export default function Portfolio() {
                 </div>
               </div>
               <div className="relative">
-                <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
                   <img
                     src="/image.jpg"
                     alt="Aditya Aditya"
@@ -456,10 +540,10 @@ export default function Portfolio() {
             </div>
           </motion.div>
         </div>
-      </section >
+      </section>
 
       {/* Skills Section */}
-      < section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-black/20" >
+      <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-black/20">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -467,7 +551,9 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold text-white mb-12 text-center">Skills & Expertise</h2>
+            <h2 className="text-4xl font-bold text-white mb-12 text-center">
+              Skills & Expertise
+            </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {skills.map((skill, index) => (
                 <motion.div
@@ -484,11 +570,15 @@ export default function Portfolio() {
                         <div className="p-2 bg-purple-600/20 rounded-lg">
                           <skill.icon className="w-6 h-6 text-purple-400" />
                         </div>
-                        <CardTitle className="text-white">{skill.name}</CardTitle>
+                        <CardTitle className="text-white">
+                          {skill.name}
+                        </CardTitle>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <CardDescription className="text-white/70">{skill.description}</CardDescription>
+                      <CardDescription className="text-white/70">
+                        {skill.description}
+                      </CardDescription>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -507,7 +597,9 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold text-white mb-12 text-center">Featured Projects</h2>
+            <h2 className="text-4xl font-bold text-white mb-12 text-center">
+              Featured Projects
+            </h2>
             <div className="grid lg:grid-cols-3 gap-8">
               {projects.map((project, index) => (
                 <motion.div
@@ -530,13 +622,17 @@ export default function Portfolio() {
                     </div>
                     <CardHeader>
                       <div className="flex justify-between items-start">
-                        <CardTitle className="text-white text-xl">{project.title}</CardTitle>
+                        <CardTitle className="text-white text-xl">
+                          {project.title}
+                        </CardTitle>
                         <div className="flex space-x-2">
                           <Button
                             size="sm"
                             variant="ghost"
                             className="text-white/70 p-2 hover:text-green-500"
-                            onClick={() => window.open(project.github, '_blank')}
+                            onClick={() =>
+                              window.open(project.github, "_blank")
+                            }
                           >
                             <Github className="w-4 h-4" />
                           </Button>
@@ -544,7 +640,7 @@ export default function Portfolio() {
                             size="sm"
                             variant="ghost"
                             className="text-white/70 p-2 hover:text-green-500"
-                            onClick={() => window.open(project.live, '_blank')}
+                            onClick={() => window.open(project.live, "_blank")}
                           >
                             <ExternalLink className="w-4 h-4" />
                           </Button>
@@ -552,7 +648,9 @@ export default function Portfolio() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <CardDescription className="text-white/70 mb-4">{project.description}</CardDescription>
+                      <CardDescription className="text-white/70 mb-4">
+                        {project.description}
+                      </CardDescription>
                       <div className="flex flex-wrap gap-2">
                         {project.technologies.map((tech) => (
                           <Badge
@@ -582,18 +680,25 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold text-white mb-12 text-center">Let's Work Together</h2>
+            <h2 className="text-4xl font-bold text-white mb-12 text-center">
+              Let's Work Together
+            </h2>
             <div className="grid md:grid-cols-2 gap-12">
               <div>
-                <h3 className="text-2xl font-semibold text-white mb-6">Get In Touch</h3>
+                <h3 className="text-2xl font-semibold text-white mb-6">
+                  Get In Touch
+                </h3>
                 <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                  I'm always interested in new opportunities and exciting projects. Whether you have a question or just
-                  want to say hi, I'll try my best to get back to you!
+                  I'm always interested in new opportunities and exciting
+                  projects. Whether you have a question or just want to say hi,
+                  I'll try my best to get back to you!
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <Mail className="w-5 h-5 text-purple-400" />
-                    <span className="text-white/80">kraditya.1222@gmail.com</span>
+                    <span className="text-white/80">
+                      kraditya.1222@gmail.com
+                    </span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Github className="w-5 h-5 text-purple-400" />
@@ -601,7 +706,9 @@ export default function Portfolio() {
                   </div>
                   <div className="flex items-center space-x-3">
                     <Linkedin className="w-5 h-5 text-purple-400" />
-                    <span className="text-white/80">linkedin.com/in/Aditya-aditya-109506237</span>
+                    <span className="text-white/80">
+                      linkedin.com/in/kumar-aditya-109506237
+                    </span>
                   </div>
                 </div>
               </div>
@@ -610,7 +717,9 @@ export default function Portfolio() {
                   <Input
                     placeholder="Your Name"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     disabled={isSubmitting}
                     className="bg-white/5 border-white/20 text-white placeholder:text-white/50 disabled:opacity-50"
                     required
@@ -621,7 +730,9 @@ export default function Portfolio() {
                     type="email"
                     placeholder="Your Email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     disabled={isSubmitting}
                     className="bg-white/5 border-white/20 text-white placeholder:text-white/50 disabled:opacity-50"
                     required
@@ -631,7 +742,9 @@ export default function Portfolio() {
                   <Textarea
                     placeholder="Your Message"
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     disabled={isSubmitting}
                     className="bg-white/5 border-white/20 text-white placeholder:text-white/50 min-h-[120px] disabled:opacity-50"
                     required
@@ -684,11 +797,31 @@ export default function Portfolio() {
               viewport={{ once: true }}
             >
               {[
-                { icon: Github, href: "https://github.com/Adityak099", label: "GitHub" },
-                { icon: Linkedin, href: "https://www.linkedin.com/in/Aditya-aditya-109506237/", label: "LinkedIn" },
-                { icon: Twitter, href: "https://x.com/kr_adi01", label: "Twitter" },
-                { icon: Mail, href: "mailto:kraditya.1222@gmail.com", label: "Email" },
-                { icon: Instagram, href: "https://instagram.com/guru_aditya09", label: "Instagram" },
+                {
+                  icon: Github,
+                  href: "https://github.com/Adityak099",
+                  label: "GitHub",
+                },
+                {
+                  icon: Linkedin,
+                  href: "https://www.linkedin.com/in/kumar-aditya-109506237/",
+                  label: "LinkedIn",
+                },
+                {
+                  icon: Twitter,
+                  href: "https://x.com/kr_adi01",
+                  label: "Twitter",
+                },
+                {
+                  icon: Mail,
+                  href: "mailto:kraditya.1222@gmail.com",
+                  label: "Email",
+                },
+                {
+                  icon: Instagram,
+                  href: "https://instagram.com/guru_aditya09",
+                  label: "Instagram",
+                },
               ].map((social, index) => (
                 <motion.a
                   key={social.label}
@@ -702,7 +835,7 @@ export default function Portfolio() {
                     type: "spring",
                     stiffness: 400,
                     damping: 25,
-                    delay: 0.4 + index * 0.1
+                    delay: 0.4 + index * 0.1,
                   }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -743,7 +876,8 @@ export default function Portfolio() {
               viewport={{ once: true }}
             >
               <p className="text-white/60 text-sm">
-                © 2024 Aditya Aditya. Built with ❣️ using Next.js and Tailwind CSS.
+                © 2024 Kumar Aditya. Built with ❣️ using Next.js and Tailwind
+                CSS.
               </p>
               <p className="text-white/40 text-xs mt-2">
                 Crafting digital experiences with passion and precision.
@@ -755,5 +889,5 @@ export default function Portfolio() {
       <Toaster />
       <FixedVisitorCounter />
     </div>
-  )
+  );
 }
