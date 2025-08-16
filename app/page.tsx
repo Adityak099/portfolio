@@ -29,6 +29,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
 import { Toaster } from "@/components/ui/toaster"
+import { FixedVisitorCounter } from "@/components/fixed-visitor-counter"
 
 const skills = [
   { name: "Frontend Development", icon: Code, description: "React, Next.js, TypeScript, Tailwind CSS" },
@@ -433,7 +434,10 @@ export default function Portfolio() {
                     variant="outline"
                     size="sm"
                     className="border-white/30 text-white hover:bg-white/10 bg-transparent"
-                    onClick={() => window.open('/Resume_14_8.pdf', '_blank')}
+                    onClick={() => {
+                      const resumeLink = 'https://drive.google.com/file/d/1z26pf0zGQliEkOZtJEDiAAmxeJvf7KbY/view?usp=sharing'
+                      window.open(resumeLink, '_blank')
+                    }}
                   >
                     <Download className="w-4 h-4 mr-2" />
                     Resume
@@ -749,6 +753,7 @@ export default function Portfolio() {
         </div>
       </footer>
       <Toaster />
+      <FixedVisitorCounter />
     </div>
   )
 }
