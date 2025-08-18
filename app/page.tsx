@@ -36,39 +36,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { FixedVisitorCounter } from "@/components/fixed-visitor-counter";
-
-const skills = [
-  {
-    name: "Frontend Development",
-    icon: Code,
-    description: "React, Next.js, TypeScript, Tailwind CSS",
-  },
-  {
-    name: "UI/UX Design",
-    icon: Palette,
-    description: "Figma, Adobe Creative Suite, Design Systems",
-  },
-  {
-    name: "Mobile Development",
-    icon: Smartphone,
-    description: "React Native, Flutter, Progressive Web Apps",
-  },
-  {
-    name: "Backend Development",
-    icon: Server,
-    description: "Node.js, Python, API Development",
-  },
-  {
-    name: "Database Management",
-    icon: Database,
-    description: "PostgreSQL, MongoDB, Redis",
-  },
-  {
-    name: "DevOps & Deployment",
-    icon: Globe,
-    description: "AWS, Docker, CI/CD, Vercel",
-  },
-];
+import TestimonialCarousel from "@/components/testimonial-carousel";
+import HorizontalSkills from "@/components/horizontal-skills";
 
 const projects = [
   {
@@ -594,50 +563,7 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-black/20">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold text-white mb-12 text-center">
-              Skills & Expertise
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {skills.map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-                    <CardHeader>
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-purple-600/20 rounded-lg">
-                          <skill.icon className="w-6 h-6 text-purple-400" />
-                        </div>
-                        <CardTitle className="text-white">
-                          {skill.name}
-                        </CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-white/70">
-                        {skill.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <HorizontalSkills />
 
       {/* Projects Section */}
       <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
@@ -850,7 +776,10 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Footer */}
+  {/* Testimonials */}
+  <TestimonialCarousel />
+
+  {/* Footer */}
       <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/10 bg-black/10">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center space-y-8">
