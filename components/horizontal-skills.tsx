@@ -128,15 +128,18 @@ export default function HorizontalSkills() {
         const middlePosition = totalWidth * 0.4
         scrollContainer.scrollLeft = middlePosition
         isInitialized = true
+        console.log('Scroll initialized:', { totalWidth, middlePosition }) // Debug log
       }
     }
 
-    // Initialize position immediately and after a small delay
+    // Initialize position immediately and after delays
     initializePosition()
-    const initTimeout = setTimeout(initializePosition, 50)
+    const initTimeout1 = setTimeout(initializePosition, 50)
+    const initTimeout2 = setTimeout(initializePosition, 200)
 
     let animationId: number
-    let scrollSpeed = 0.3 // Slower speed for relaxed viewing
+    // Increased speed for better visibility on large screens
+    let scrollSpeed = window.innerWidth > 1024 ? 0.8 : 0.4 // Faster on desktop
     let isRunning = true
 
     const scroll = () => {
@@ -151,6 +154,11 @@ export default function HorizontalSkills() {
         if (scrollContainer.scrollLeft <= singleSetWidth) {
           scrollContainer.scrollLeft = singleSetWidth * 3
         }
+        
+        // If somehow scrolled too far right, reset
+        if (scrollContainer.scrollLeft >= singleSetWidth * 4) {
+          scrollContainer.scrollLeft = singleSetWidth * 2
+        }
       }
       
       // Always continue the animation loop
@@ -159,8 +167,12 @@ export default function HorizontalSkills() {
       }
     }
 
-    // Start animation immediately
-    animationId = requestAnimationFrame(scroll)
+    // Start animation with a slight delay to ensure initialization
+    const startTimeout = setTimeout(() => {
+      if (isRunning) {
+        animationId = requestAnimationFrame(scroll)
+      }
+    }, 100)
 
     // Ensure animation continues even if page loses focus
     const handleVisibilityChange = () => {
@@ -170,13 +182,26 @@ export default function HorizontalSkills() {
       }
     }
 
+    // Force restart animation on resize (helpful for responsive)
+    const handleResize = () => {
+      scrollSpeed = window.innerWidth > 1024 ? 0.8 : 0.4
+      if (!isRunning) {
+        isRunning = true
+        animationId = requestAnimationFrame(scroll)
+      }
+    }
+
     document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('resize', handleResize)
 
     return () => {
       isRunning = false
       cancelAnimationFrame(animationId)
-      clearTimeout(initTimeout)
+      clearTimeout(initTimeout1)
+      clearTimeout(initTimeout2)
+      clearTimeout(startTimeout)
       document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('resize', handleResize)
     }
   }, [])
 
