@@ -453,7 +453,7 @@ export default function Portfolio() {
                 href: "mailto:kraditya.1222@gmail.com",
                 label: "Email",
               },
-              { icon: Twitter, href: "https://x.com/kr_adi01", label: "X" },
+              //{ icon: Twitter, href: "https://x.com/kr_adi01", label: "X" },
             ].map((social, index) => (
               <motion.a
                 key={social.label}
