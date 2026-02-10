@@ -536,7 +536,7 @@ export default function Portfolio() {
                     className="border-white/30 text-white hover:bg-white/10 bg-transparent"
                     onClick={() => {
                       const resumeLink =
-                        "https://drive.google.com/file/d/1z26pf0zGQliEkOZtJEDiAAmxeJvf7KbY/view?usp=sharing";
+                        "https://drive.google.com/file/d/1_kLplv-0TOn8HfuHuSK3kyvIz6d1eStU/view?usp=sharing";
                       window.open(resumeLink, "_blank");
                     }}
                   >
