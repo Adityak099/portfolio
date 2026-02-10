@@ -813,11 +813,11 @@ export default function Portfolio() {
                   href: "https://www.linkedin.com/in/kumar-aditya-109506237/",
                   label: "LinkedIn",
                 },
-                {
-                  icon: Twitter,
-                  href: "https://x.com/kr_adi01",
-                  label: "Twitter",
-                },
+                // {
+                //   icon: Twitter,
+                //   href: "https://x.com/kr_adi01",
+                //   label: "Twitter",
+                // },
                 {
                   icon: Mail,
                   href: "mailto:kraditya.1222@gmail.com",
