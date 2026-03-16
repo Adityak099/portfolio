@@ -11,7 +11,7 @@ import {
   SiPython, 
   SiMongodb, 
   SiPostgresql, 
-  SiAmazon, 
+  SiAmazon as FaAmazon , 
   SiDocker, 
   SiGit, 
   SiFigma, 
@@ -30,7 +30,7 @@ const NodeJSIcon = () => <SiNodedotjs className="w-full h-full" />
 const PythonIcon = () => <SiPython className="w-full h-full" />
 const MongoDBIcon = () => <SiMongodb className="w-full h-full" />
 const PostgreSQLIcon = () => <SiPostgresql className="w-full h-full" />
-const AWSIcon = () => <SiAmazon className="w-full h-full" />
+const AWSIcon = () => <FaAmazon  className="w-full h-full" />
 const DockerIcon = () => <SiDocker className="w-full h-full" />
 const GitIcon = () => <SiGit className="w-full h-full" />
 const FigmaIcon = () => <SiFigma className="w-full h-full" />
