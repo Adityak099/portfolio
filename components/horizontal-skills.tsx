@@ -11,7 +11,6 @@ import {
   SiPython, 
   SiMongodb, 
   SiPostgresql, 
-  SiAmazon as FaAmazon , 
   SiDocker, 
   SiGit, 
   SiFigma, 
@@ -20,6 +19,7 @@ import {
   SiRedis, 
   SiVercel 
 } from "react-icons/si"
+import { FaAmazon } from "react-icons/fa"
 
 // Official icon components using react-icons
 const ReactIcon = () => <SiReact className="w-full h-full" />
