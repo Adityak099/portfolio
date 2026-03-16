@@ -253,7 +253,7 @@ export default function Portfolio() {
               className="text-2xl font-bold text-white"
               whileHover={{ scale: 1.05 }}
             >
-              Aditya's Portfolio
+              <span className="font-bold text-white font-mono tracking-widest text-2xl">KA</span>
             </motion.div>
             <div className="hidden md:flex space-x-8">
               {["About", "Skills", "Projects", "Contact"].map((item) => (
@@ -491,7 +491,7 @@ export default function Portfolio() {
                   <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-semibold">
                     Kumar Aditya
                   </span>
-                  , a final-year B.Tech Computer Science student and passionate{" "}
+                    , a 2025 B.Tech Computer Science graduate from SRM Institute of Science and Technology and passionate{" "}
                   <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent font-semibold">
                     Full-Stack Developer
                   </span>{" "}
