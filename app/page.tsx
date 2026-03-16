@@ -791,7 +791,7 @@ export default function Portfolio() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              Aditya's Portfolio
+              Aditya
             </motion.div>
 
             {/* Social Links */}
