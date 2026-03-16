@@ -112,8 +112,7 @@ export default function Portfolio() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const backgroundY = "0%";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -166,7 +165,7 @@ export default function Portfolio() {
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, // From .env.local
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, // From .env.local
         templateParams,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY! // From .env.local
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!, // From .env.local
       );
 
       console.log("EmailJS Success:", result);
@@ -215,7 +214,7 @@ export default function Portfolio() {
       // Create a mailto fallback link
       const subject = encodeURIComponent("Portfolio Contact");
       const body = encodeURIComponent(
-        `Hi Kumar Aditya,\n\nName: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+        `Hi Kumar Aditya,\n\nName: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`,
       );
       const mailtoLink = `mailto:kraditya.1222@gmail?subject=${subject}&body=${body}`;
 
@@ -223,7 +222,7 @@ export default function Portfolio() {
       setTimeout(() => {
         if (
           confirm(
-            "Would you like to open your email client to send the message directly?"
+            "Would you like to open your email client to send the message directly?",
           )
         ) {
           window.location.href = mailtoLink;
@@ -253,7 +252,9 @@ export default function Portfolio() {
               className="text-2xl font-bold text-white"
               whileHover={{ scale: 1.05 }}
             >
-              <span className="font-bold text-white font-mono tracking-widest text-2xl">KA</span>
+              <span className="font-bold text-white font-mono tracking-widest text-2xl">
+                KA
+              </span>
             </motion.div>
             <div className="hidden md:flex space-x-8">
               {["About", "Skills", "Projects", "Contact"].map((item) => (
@@ -279,7 +280,7 @@ export default function Portfolio() {
         id="hero"
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
-        <motion.div className="absolute inset-0 z-0" style={{ y: backgroundY }}>
+        <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20" />
 
           {/* Animated gradient orbs */}
@@ -329,7 +330,7 @@ export default function Portfolio() {
               }}
             />
           ))}
-        </motion.div>
+        </div>
 
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -491,7 +492,8 @@ export default function Portfolio() {
                   <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-semibold">
                     Kumar Aditya
                   </span>
-                    , a 2025 B.Tech Computer Science graduate from SRM Institute of Science and Technology and passionate{" "}
+                  , a 2025 B.Tech Computer Science graduate from SRM Institute
+                  of Science and Technology and passionate{" "}
                   <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent font-semibold">
                     Full-Stack Developer
                   </span>{" "}
@@ -761,7 +763,7 @@ export default function Portfolio() {
                           formData.name || "[Your Name]"
                         }\nEmail: ${
                           formData.email || "[Your Email]"
-                        }\n\nMessage:\n${formData.message || "[Your Message]"}`
+                        }\n\nMessage:\n${formData.message || "[Your Message]"}`,
                       );
                       window.location.href = `mailto:kraditya.1222@gmail.com?subject=${subject}&body=${body}`;
                     }}
@@ -776,10 +778,10 @@ export default function Portfolio() {
         </div>
       </section>
 
-  {/* Testimonials */}
-  <TestimonialCarousel />
+      {/* Testimonials */}
+      <TestimonialCarousel />
 
-  {/* Footer */}
+      {/* Footer */}
       <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/10 bg-black/10">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center space-y-8">
