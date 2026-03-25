@@ -567,6 +567,81 @@ export default function Portfolio() {
       {/* Skills Section */}
       <HorizontalSkills />
 
+      {/* Experience Section */}
+      <section
+        id="experience"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/50 rounded-2xl mx-4 sm:mx-6 lg:mx-8"
+      >
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-bold text-white mb-12 text-center">
+              Experience
+            </h2>
+            <div className="space-y-8">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-lg shadow-black/20">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-2xl font-semibold text-white">
+                    Software Development Engineer (Full-time)
+                  </h3>
+                  <span className="text-sm text-purple-200">
+                    Jul 2025 - Present
+                  </span>
+                </div>
+                <p className="text-white/80 mb-2 font-medium">
+                  improveFX • Delhi, India
+                </p>
+                <ul className="list-disc list-inside text-white/70 space-y-2">
+                  <li>
+                    Developed and shipped production-ready frontend features
+                    using React.js.
+                  </li>
+                  <li>
+                    Improved performance by optimizing rendering paths and
+                    reducing load times.
+                  </li>
+                  <li>
+                    Integrated APIs and handled edge cases for reliable user
+                    experience.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-lg shadow-black/20">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-2xl font-semibold text-white">
+                    Frontend Development Intern
+                  </h3>
+                  <span className="text-sm text-purple-200">
+                    Feb 2025 - Jun 2025
+                  </span>
+                </div>
+                <p className="text-white/80 mb-2 font-medium">
+                  improveFX • Delhi, India
+                </p>
+                <ul className="list-disc list-inside text-white/70 space-y-2">
+                  <li>
+                    Developed key UI sections including Dashboard, Navbar, and
+                    module pages.
+                  </li>
+                  <li>
+                    Collaborated on UI/UX design, feature development, and
+                    API-driven workflows.
+                  </li>
+                  <li>
+                    Improved responsiveness and SEO-focused modern UI layouts.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Projects Section */}
       <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
